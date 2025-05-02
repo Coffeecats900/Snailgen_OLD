@@ -1704,7 +1704,7 @@ class Cat():
 
         new_condition = choice(possible_conditions)
 
-        if new_condition == "born without a leg":
+        if new_condition == "shattered shell":
             cat.scars.append('NOPAW')
         elif new_condition == "born without a tail":
             cat.scars.append('NOTAIL')
@@ -1742,7 +1742,7 @@ class Cat():
         elif born_with is False:
             moons_until = 0
 
-        if name == "paralyzed":
+        if name == "without a shell":
             self.paralyzed = True
             update_sprite(self)
 
@@ -1923,7 +1923,7 @@ class Cat():
                 if "permanent conditions" in rel_data:
                     self.permanent_condition = rel_data.get("permanent conditions")
 
-            if "paralyzed" in self.permanent_condition and not self.paralyzed:
+            if "without a shell" in self.permanent_condition and not self.paralyzed:
                 self.paralyzed = True
 
         except Exception as e:

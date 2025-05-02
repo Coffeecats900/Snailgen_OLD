@@ -160,11 +160,11 @@
 	},
 	"cat_generation": {
 		"base_permanent_condition": 90,
-		"base_male_tortie": 13,
+		"base_male_tortie": 10,
 		"base_female_tortie": 4,
-		"base_heterochromia": 120,
+		"base_heterochromia": 100,
 		"direct_inheritance": 15,
-		"wildcard_tortie": 9,
+		"wildcard_tortie": 6,
 		"vit_chance": 10,
 		"random_point_chance": 6
 	},
@@ -241,7 +241,7 @@
 		"permanent_condition_chance": 20
 	},
 	"clan_creation": {
-		"rerolls": 3,
+		"rerolls": -1,
 		"comment": "Set this to -1 for it to be infinite"
 	},
 	"graduation": {

@@ -625,7 +625,7 @@ class Pregnancy_Events():
                     and game.clan.game_mode != 'classic':
                 kit.congenital_condition(kit)
                 for condition in kit.permanent_condition:
-                    if kit.permanent_condition[condition] == 'born without a leg':
+                    if kit.permanent_condition[condition] == 'born with a cracked shell':
                         kit.scars.append('NOPAW')
                     elif kit.permanent_condition[condition] == 'born without a tail':
                         kit.scars.append('NOTAIL')

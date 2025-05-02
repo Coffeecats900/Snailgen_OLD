@@ -63,7 +63,7 @@ class Sprites():
                    pos,
                    name,
                    sprites_x=3,
-                   sprites_y=7):  # pos = ex. (2, 3), no single pixels
+                   sprites_y=8):  # pos = ex. (2, 3), no single pixels
         """
         Divide sprites on a sprite-sheet into groups of sprites that are easily accessible.
 
@@ -183,12 +183,12 @@ width, height = lineart.get_size()
 del lineart # unneeded
 
 # if anyone changes lineart for whatever reason update this
-if width / 3 == height / 7:
+if width / 3 == height / 8:
     spriteSize = width / 3
 else:
     spriteSize = 50 # default, what base clangen uses
-    print(f"lineart.png is not 3x7, falling back to {spriteSize}")
-    print(f"if you are a modder, please update scripts/cat/sprites.py and do a search for 'if width / 3 == height / 7:'")
+    print(f"lineart.png is not 3x8, falling back to {spriteSize}")
+    print(f"if you are a modder, please update scripts/cat/sprites.py and do a search for 'if width / 3 == height / 8:'")
 
 del width, height # unneeded
 
@@ -199,7 +199,7 @@ sprites = Sprites(spriteSize)
 
 for x in [
     'lineart', 'singlecolours', 'speckledcolours', 'tabbycolours',
-    'whitepatches', 'eyes', 'eyes2', 'skin', 'scars', 'missingscars',
+    'whitepatches', 'eyes', 'eyes2', 'eyes3', 'eyes4', 'skin', 'scars', 'missingscars',
     'collars', 'bellcollars', 'bowcollars', 'nyloncollars',
     'bengalcolours', 'marbledcolours', 'rosettecolours', 'smokecolours', 'tickedcolours', 
     'mackerelcolours', 'classiccolours', 'sokokecolours', 'agouticolours', 'singlestripecolours', 
@@ -229,12 +229,19 @@ for i in range(0, 3):
 
 for a, i in enumerate(
         ['YELLOW', 'AMBER', 'HAZEL', 'PALEGREEN', 'GREEN', 'BLUE', 
-        'DARKBLUE', 'GREY', 'CYAN', 'EMERALD', 'HEATHERBLUE', 'SUNLITICE']):
+        'DARKBLUE', 'PURPLE', 'CYAN', 'EMERALD', 'HEATHERBLUE', 'SUNLITICE']):
     sprites.make_group('eyes', (a, 0), f'eyes{i}')
     sprites.make_group('eyes2', (a, 0), f'eyes2{i}')
+
 for a, i in enumerate(
-        ['COPPER', 'SAGE', 'COBALT', 'PALEBLUE', 'BRONZE', 'SILVER',
-        'PALEYELLOW', 'GOLD', 'GREENYELLOW']):
+        ['PEACH', 'RED', 'TOXIC', 'HOLLY', 'ICY', 'HAZELBLUE', 'SUNSET',
+         'LILY', 'OPAL', 'ROSE', 'DUSK', 'STARLIGHT']):
+    sprites.make_group('eyes3', (a, 0), f'eyes{i}')
+    sprites.make_group('eyes4', (a, 0), f'eyes2{i}')
+   
+for a, i in enumerate(
+        ['COPPER', 'SAGE', 'COBALT', 'SEABLUE', 'DARKMAGENTA', 'IRIDESCENT',
+        'GOLD', 'GREENYELLOW', 'PINKYELLOW', 'MIRE', 'DAWN', 'GARNET']):
     sprites.make_group('eyes', (a, 1), f'eyes{i}')
     sprites.make_group('eyes2', (a, 1), f'eyes2{i}')
 

@@ -908,7 +908,7 @@ class Events():
                 self.handle_leadership_ceremony(game.clan.deputy)
                 if game.clan.deputy.trait == 'bloodthirsty':
                     text = f'{game.clan.deputy.name} has become the new leader. ' \
-                           f'They stare down at their Clanmates with unsheathed claws, ' \
+                           f'They stare down at their Clanmates with a cold gaze, ' \
                            f'promising a new era for the Clans.'
                 else:
                     c = random.choice([1, 2, 3])
