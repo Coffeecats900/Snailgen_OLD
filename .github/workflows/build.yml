@@ -40,7 +40,7 @@ jobs:
         run: poetry run python3 -m PyInstaller Clangen.spec
       - name: Create archive (.tar.xz)
         run: tar -caf Clangen_Linux64_glibc2.31+.tar.xz -C dist Clangen
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Clangen_Linux64_glibc2.31+.tar.xz
           path: Clangen_Linux64_glibc2.31+.tar.xz
