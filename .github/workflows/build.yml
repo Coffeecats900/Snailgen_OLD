@@ -495,117 +495,117 @@ jobs:
     bash miniconda.sh -b -p $HOME/miniconda
     echo "$HOME/miniconda/bin" >> $GITHUB_PATH
 
-- name: Setup Miniconda
-  uses: conda-incubator/setup-miniconda@v2
-  with:
-    python-version: "3.11.3"
-    auto-activate-base: true
-    activate-environment: base
-      # - name: Install poetry
-      #   uses: abatilo/actions-poetry@v2
-      #   with:
-      #     poetry-version: 1.4.1
-      # - name: install dependencies
-      #   run: poetry install --with build -E discord
-      - name: Update pip
-        run: python -m pip install --upgrade pip
-      - name: Update setuptools and wheel
-        run: python -m pip install --upgrade setuptools wheel
-      - name: Install dependencies
-        run: python -m pip install -r requirements.txt
-      - name: Install Pillow for icon format conversion
-        run: python -m pip install --upgrade Pillow
-      - name: Install PyInstaller
-        run: python -m pip install --upgrade PyInstaller
-      - name: Configure dev
-        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
-        run: |
-          echo "VERSION_NUMBER=${{ github.sha }}" >> $GITHUB_ENV
-          echo "RELEASE_CHANNEL=development" >> $GITHUB_ENV
-      - name: Configure release
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          echo "VERSION_NUMBER=${{ github.ref_name }}" >> $GITHUB_ENV
-          echo "RELEASE_CHANNEL=stable" >> $GITHUB_ENV
-      - name: Write version file
-        run: |
-          echo "[DEFAULT]" > version.ini
-          echo "version_number=${{ env.VERSION_NUMBER }}" >> version.ini
-          echo "release_channel=${{ env.RELEASE_CHANNEL }}" >> version.ini
-          echo "upstream=${{ github.repository }}" >> version.ini
-      - name: Run PyInstaller
-        #run: poetry run python3 -m PyInstaller -i resources/images/icon.png --name clangen --windowed --onedir --clean --add-data sprites:sprites --add-data resources:resources --add-data README.md:. main.py
-        # run: poetry run python3 -m PyInstaller Clangen.spec
-        run: python -m PyInstaller Clangen.spec
-      - name: Create archive (.tar.xz)
-        run: rm -r dist/Clangen
-      - name: Install appdmg
-        run: "npm install -g appdmg"
-      - name: Generate .dmg
-        run: "appdmg appdmg.json Clangen_macOS64.dmg"
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Clangen_macOS64.dmg
-          path: Clangen_macOS64.dmg
-      - name: Import GPG key
-        id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@v5
-        if: github.repository == 'Thlumyn/clangen'
-        with:
-          gpg_private_key: ${{ secrets.PACKAGESIGNKEY }}
-          passphrase: ${{ secrets.PACKAGESIGNKEYPASSPHRASE }}
-      - name: Upload artifact to API
-        if: github.repository == 'Thlumyn/clangen'
-        run: |
-          zip Clangen_macOS64.dmg.zip ./Clangen_macOS64.dmg
-          gpg --output Clangen_macOS64.dmg.zip.sig --detach-sig -a Clangen_macOS64.dmg.zip
-          curl -X 'POST' \
-            'https://clangen.archanyhm.dev/api/v1/Update/Channels/${{ env.RELEASE_CHANNEL }}/Releases/${{ env.VERSION_NUMBER }}/Appoint' \
-            -H 'X-API-Key: ${{ secrets.UPDATE_API_DEPLOY_KEY }}' \
-            -H 'accept: */*'
-          curl -X 'PUT' \
-            'https://clangen.archanyhm.dev/api/v1/Update/Channels/${{ env.RELEASE_CHANNEL }}/Releases/${{ env.VERSION_NUMBER }}/Artifacts/macOS' \
-            -H 'X-API-Key: ${{ secrets.UPDATE_API_DEPLOY_KEY }}' \
-            -H 'accept: */*' \
-            -H 'Content-Type: multipart/form-data' \
-            -F 'fileBundle=@Clangen_macOS64.dmg.zip;type=application/zip' \
-            -F 'fileBundle=@Clangen_macOS64.dmg.zip.sig' \
-            --http1.1
-      - name: Set up butler
-        uses: jdno/setup-butler@v1
-      - name: Upload build to itch.io
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-        if: startsWith(github.ref, 'refs/tags/') && env.BUTLER_API_KEY != ''
-        run: butler push Clangen_macOS64.dmg sablesteel/clan-gen-fan-edit:osx64 --userversion "${{ env.VERSION_NUMBER }}"
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: Clangen_macOS64.dmg
-  confirm_release_ubuntu_22_04:
-    runs-on: ubuntu-22.04
-    needs:
-      - build_ubuntu_20_04
-      - build_ubuntu_22_04
-      - build_win32
-      - build_win64
-      - build_win64_py311
-      - build_macos64
-    steps:
-      - name: Configure dev
-        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
-        run: |
-          echo "VERSION_NUMBER=${{ github.sha }}" >> $GITHUB_ENV
-          echo "RELEASE_CHANNEL=development" >> $GITHUB_ENV
-      - name: Configure release
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          echo "VERSION_NUMBER=${{ github.ref_name }}" >> $GITHUB_ENV
-          echo "RELEASE_CHANNEL=stable" >> $GITHUB_ENV
-      - name: Confirm release
-        run: |
-          curl -X 'POST' \
-            'https://clangen.archanyhm.dev/api/v1/Update/Channels/${{ env.RELEASE_CHANNEL }}/Releases/${{ env.VERSION_NUMBER }}/Confirm' \
-            -H 'X-API-Key: ${{ secrets.UPDATE_API_DEPLOY_KEY }}' \
-            -H 'accept: */*'
+  - name: Setup Miniconda
+    uses: conda-incubator/setup-miniconda@v2
+    with:
+      python-version: "3.11.3"
+      auto-activate-base: true
+      activate-environment: base
+        # - name: Install poetry
+        #   uses: abatilo/actions-poetry@v2
+        #   with:
+        #     poetry-version: 1.4.1
+        # - name: install dependencies
+        #   run: poetry install --with build -E discord
+        - name: Update pip
+          run: python -m pip install --upgrade pip
+        - name: Update setuptools and wheel
+          run: python -m pip install --upgrade setuptools wheel
+        - name: Install dependencies
+          run: python -m pip install -r requirements.txt
+        - name: Install Pillow for icon format conversion
+          run: python -m pip install --upgrade Pillow
+        - name: Install PyInstaller
+          run: python -m pip install --upgrade PyInstaller
+        - name: Configure dev
+          if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+          run: |
+            echo "VERSION_NUMBER=${{ github.sha }}" >> $GITHUB_ENV
+            echo "RELEASE_CHANNEL=development" >> $GITHUB_ENV
+        - name: Configure release
+          if: startsWith(github.ref, 'refs/tags/')
+          run: |
+            echo "VERSION_NUMBER=${{ github.ref_name }}" >> $GITHUB_ENV
+            echo "RELEASE_CHANNEL=stable" >> $GITHUB_ENV
+        - name: Write version file
+          run: |
+            echo "[DEFAULT]" > version.ini
+            echo "version_number=${{ env.VERSION_NUMBER }}" >> version.ini
+            echo "release_channel=${{ env.RELEASE_CHANNEL }}" >> version.ini
+            echo "upstream=${{ github.repository }}" >> version.ini
+        - name: Run PyInstaller
+          #run: poetry run python3 -m PyInstaller -i resources/images/icon.png --name clangen --windowed --onedir --clean --add-data sprites:sprites --add-data resources:resources --add-data README.md:. main.py
+          # run: poetry run python3 -m PyInstaller Clangen.spec
+          run: python -m PyInstaller Clangen.spec
+        - name: Create archive (.tar.xz)
+          run: rm -r dist/Clangen
+        - name: Install appdmg
+          run: "npm install -g appdmg"
+        - name: Generate .dmg
+          run: "appdmg appdmg.json Clangen_macOS64.dmg"
+        - uses: actions/upload-artifact@v4
+          with:
+            name: Clangen_macOS64.dmg
+            path: Clangen_macOS64.dmg
+        - name: Import GPG key
+          id: import_gpg
+          uses: crazy-max/ghaction-import-gpg@v5
+          if: github.repository == 'Thlumyn/clangen'
+          with:
+            gpg_private_key: ${{ secrets.PACKAGESIGNKEY }}
+            passphrase: ${{ secrets.PACKAGESIGNKEYPASSPHRASE }}
+        - name: Upload artifact to API
+          if: github.repository == 'Thlumyn/clangen'
+          run: |
+            zip Clangen_macOS64.dmg.zip ./Clangen_macOS64.dmg
+            gpg --output Clangen_macOS64.dmg.zip.sig --detach-sig -a Clangen_macOS64.dmg.zip
+            curl -X 'POST' \
+              'https://clangen.archanyhm.dev/api/v1/Update/Channels/${{ env.RELEASE_CHANNEL }}/Releases/${{ env.VERSION_NUMBER }}/Appoint' \
+              -H 'X-API-Key: ${{ secrets.UPDATE_API_DEPLOY_KEY }}' \
+              -H 'accept: */*'
+            curl -X 'PUT' \
+              'https://clangen.archanyhm.dev/api/v1/Update/Channels/${{ env.RELEASE_CHANNEL }}/Releases/${{ env.VERSION_NUMBER }}/Artifacts/macOS' \
+              -H 'X-API-Key: ${{ secrets.UPDATE_API_DEPLOY_KEY }}' \
+              -H 'accept: */*' \
+              -H 'Content-Type: multipart/form-data' \
+              -F 'fileBundle=@Clangen_macOS64.dmg.zip;type=application/zip' \
+              -F 'fileBundle=@Clangen_macOS64.dmg.zip.sig' \
+              --http1.1
+        - name: Set up butler
+          uses: jdno/setup-butler@v1
+        - name: Upload build to itch.io
+          env:
+            BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+          if: startsWith(github.ref, 'refs/tags/') && env.BUTLER_API_KEY != ''
+          run: butler push Clangen_macOS64.dmg sablesteel/clan-gen-fan-edit:osx64 --userversion "${{ env.VERSION_NUMBER }}"
+        - name: Release
+          uses: softprops/action-gh-release@v1
+          if: startsWith(github.ref, 'refs/tags/')
+          with:
+            files: Clangen_macOS64.dmg
+    confirm_release_ubuntu_22_04:
+      runs-on: ubuntu-22.04
+      needs:
+        - build_ubuntu_20_04
+        - build_ubuntu_22_04
+        - build_win32
+        - build_win64
+        - build_win64_py311
+        - build_macos64
+      steps:
+        - name: Configure dev
+          if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+          run: |
+            echo "VERSION_NUMBER=${{ github.sha }}" >> $GITHUB_ENV
+            echo "RELEASE_CHANNEL=development" >> $GITHUB_ENV
+        - name: Configure release
+          if: startsWith(github.ref, 'refs/tags/')
+          run: |
+            echo "VERSION_NUMBER=${{ github.ref_name }}" >> $GITHUB_ENV
+            echo "RELEASE_CHANNEL=stable" >> $GITHUB_ENV
+        - name: Confirm release
+          run: |
+            curl -X 'POST' \
+              'https://clangen.archanyhm.dev/api/v1/Update/Channels/${{ env.RELEASE_CHANNEL }}/Releases/${{ env.VERSION_NUMBER }}/Confirm' \
+              -H 'X-API-Key: ${{ secrets.UPDATE_API_DEPLOY_KEY }}' \
+              -H 'accept: */*'
