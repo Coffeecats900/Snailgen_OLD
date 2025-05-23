@@ -16,10 +16,10 @@ jobs:
         uses: abatilo/actions-poetry@v2
         with:
           poetry-version: 1.4.1
-      - name: Setup Python 3.11 x64
+      - name: Setup Python 3.11.3 x64
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.11.3'
           architecture: 'x64'
           cache: 'poetry'
       - name: install dependencies
@@ -94,10 +94,10 @@ jobs:
         uses: abatilo/actions-poetry@v2
         with:
           poetry-version: 1.4.1
-      - name: Setup Python 3.11 x64
+      - name: Setup Python 3.11.3 x64
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.11.3'
           architecture: 'x64'
           cache: 'poetry'
       - name: install dependencies
@@ -378,10 +378,10 @@ jobs:
         uses: abatilo/actions-poetry@v2
         with:
           poetry-version: 1.4.1
-      - name: Setup Python 3.11 x64
+      - name: Setup Python 3.11.3 x64
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.11.3'
           architecture: 'x64'
           cache: 'poetry'
       - name: Set up cargo cache
@@ -485,10 +485,22 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Python 3.11 x64
+      - name: Setup Python 3.11.3 x64
         uses: conda-incubator/setup-miniconda@v2
         with:
-          python-version: "3.11"
+          python-version: "3.11.3"
+      - name: Install Miniconda
+  run: |
+    curl -sSLo miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
+    bash miniconda.sh -b -p $HOME/miniconda
+    echo "$HOME/miniconda/bin" >> $GITHUB_PATH
+
+- name: Setup Miniconda
+  uses: conda-incubator/setup-miniconda@v2
+  with:
+    python-version: "3.11.3"
+    auto-activate-base: true
+    activate-environment: base
       # - name: Install poetry
       #   uses: abatilo/actions-poetry@v2
       #   with:
