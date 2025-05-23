@@ -117,7 +117,7 @@ jobs:
         run: poetry run python3 -m PyInstaller Clangen.spec
       - name: Create archive (.tar.xz)
         run: tar -caf Clangen_Linux64_glibc2.35+.tar.xz -C dist Clangen
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Clangen_Linux64_glibc2.35+.tar.xz
           path: Clangen_Linux64_glibc2.35+.tar.xz
@@ -218,7 +218,7 @@ jobs:
         run: |
           cp dist/Clangen/.itch.toml dist/ 
           tar.exe -a -c -f Clangen_Win32.zip -C dist Clangen .itch.toml
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Clangen_Win32
           path: Clangen_Win32.zip
@@ -324,7 +324,7 @@ jobs:
         run: |
           cp dist/Clangen/.itch.toml dist/ 
           tar.exe -a -c -f Clangen_Win64.zip -C dist Clangen .itch.toml
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Clangen_Win64
           path: Clangen_Win64.zip
@@ -430,7 +430,7 @@ jobs:
         run: |
           cp dist/Clangen/.itch.toml dist/ 
           tar.exe -a -c -f Clangen_Win64_Windows10+.zip -C dist Clangen .itch.toml
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Clangen_Win64_Windows10+
           path: Clangen_Win64_Windows10+.zip
@@ -526,7 +526,7 @@ jobs:
         run: "npm install -g appdmg"
       - name: Generate .dmg
         run: "appdmg appdmg.json Clangen_macOS64.dmg"
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Clangen_macOS64.dmg
           path: Clangen_macOS64.dmg
