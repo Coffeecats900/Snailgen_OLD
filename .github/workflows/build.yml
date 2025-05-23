@@ -2,6 +2,10 @@ name: PyInstaller build
 
 permissions:
   contents: write
+<<<<<<< HEAD
+=======
+
+>>>>>>> 84aaebe2150e62dab045cd9a6fca807f263c835a
 
 on: [push, workflow_dispatch]
 
