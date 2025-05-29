@@ -161,18 +161,16 @@ class StartScreen(Screens):
             "",
             scale(pygame.Rect((275, 370), (770, 720))),
             object_id="#text_box_22_horizleft",
-            manager=MANAGER,
-            layer_starting_height=3)
-
+            manager=MANAGER,  # Remove layer_starting_height
+        )
 
         self.error_gethelp = pygame_gui.elements.UITextBox(
-            "Please join the Discord server and ask for technical support. " \
-            "We\'ll be happy to help! Please include the error message and the traceback below (if available). " \
-            '<br><a href="https://discord.gg/clangen">Discord</a>', # pylint: disable=line-too-long
+            "Please join the Discord server and ask for technical support. "
+            "We'll be happy to help! Please include the error message and the traceback below (if available). "
+            '<br><a href="https://discord.gg/clangen">Discord</a>',
             scale(pygame.Rect((1055, 430), (350, 600))),
             object_id="#text_box_22_horizleft",
-            layer_starting_height=3,
-            manager=MANAGER
+            manager=MANAGER,  # Remove layer_starting_height
         )
 
         self.open_data_directory_button = UIImageButton(
